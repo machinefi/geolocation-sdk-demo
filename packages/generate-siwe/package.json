@@ -1,0 +1,14 @@
+{
+  "name": "@geostream-react/generate-siwe",
+  "version": "0.0.0",
+  "description": "generate siwe message from location data",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest"
+  },
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "siwe": "^1.1.6"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "@geostream-react/verify",
+  "version": "0.0.0",
+  "description": "verify siwe msg and generate proof of location",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest"
+  },
+  "author": "",
+  "license": "MIT"
+}
