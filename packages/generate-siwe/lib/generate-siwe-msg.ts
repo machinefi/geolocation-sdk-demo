@@ -1,11 +1,11 @@
 import { SiweMessage } from "siwe";
-import { formatDate, scaleCoordinatesDown } from "./helpers";
 import { LocationSiweProps, ParsedLocationSiweProps } from "./types";
 
 const TESTNET_CHAIN_ID = 4690;
 
 const generateSiweMsg = (props: LocationSiweProps): string => {
   validateProps(props);
+
   const parsedProps = parseProps(props);
 
   const message = new SiweMessage({
@@ -15,7 +15,7 @@ const generateSiweMsg = (props: LocationSiweProps): string => {
     uri: props.uri,
     version: "1",
     chainId: TESTNET_CHAIN_ID,
-    expirationTime: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+    expirationTime: new Date(Date.now() + 5 * 60 * 1000).toISOString(), // 5 minutes from now
   });
   return message.prepareMessage();
 };
@@ -44,46 +44,31 @@ const validateAddress = (address: string) => {
     throw new Error("Zero address is invalid");
 };
 
-const validateLatitude = (latitude: string) => {
-  if (!latitude) throw new Error("Latitude is required");
-  if (Number.isNaN(Number(latitude))) throw new Error("Latitude is invalid");
-  if (Number(latitude) < -90 || Number(latitude) > 90)
+const validateLatitude = (latitude: number) => {
+  if (latitude < -90 || latitude > 90)
     throw new Error("Latitude is out of range");
 };
 
-const validateLongitude = (longitude: string) => {
-  if (!longitude) throw new Error("Longitude is required");
-  if (Number.isNaN(Number(longitude))) throw new Error("Longitude is invalid");
-  if (Number(longitude) < -180 || Number(longitude) > 180)
+const validateLongitude = (longitude: number) => {
+  if (longitude < -180 || longitude > 180)
     throw new Error("Longitude is out of range");
 };
 
-const validateDistance = (distance: string) => {
-  if (!distance) throw new Error("Distance is required");
-  if (Number.isNaN(Number(distance))) throw new Error("Distance is invalid");
-  if (Number(distance) < 0) throw new Error("Distance is out of range");
+const validateDistance = (distance: number) => {
+  if (distance <= 0) throw new Error("Distance is out of range");
 };
 
-const validateTime = (from: string, to: string) => {
-  if (!from) throw new Error("From is required");
-  if (!to) throw new Error("To is required");
-  if (Number.isNaN(Number(from))) throw new Error("From is invalid");
-  if (Number.isNaN(Number(to))) throw new Error("To is invalid");
-  if (Number(from) < 0) throw new Error("From is out of range");
-  if (Number(to) < 0) throw new Error("To is out of range");
-  if (Number(from) > Number(to)) throw new Error("From is greater than To");
+const validateTime = (from: number, to: number) => {
+  if (from < 0) throw new Error("From is out of range");
+  if (to < 0) throw new Error("To is out of range");
+  if (from >= to) throw new Error("From is greater or equals To");
 };
 
-const parseProps = (props: LocationSiweProps) => {
-  const { latitude, longitude, distance, from, to } = props;
-  return {
-    latitude: scaleCoordinatesDown(Number(latitude)),
-    longitude: scaleCoordinatesDown(Number(longitude)),
-    distance: Number(distance),
-    from: formatDate(Number(from)),
-    to: formatDate(Number(to)),
-  };
-};
+const parseProps = (props: LocationSiweProps) => ({
+  ...props,
+  from: new Date(props.from).toLocaleDateString(),
+  to: new Date(props.to).toLocaleDateString(),
+});
 
 const generateStatement = ({
   latitude,
