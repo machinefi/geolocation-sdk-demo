@@ -9,7 +9,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap && lerna exec npm install",
     "test": "npx lerna run test",
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "publish": "lerna publish --no-private"
   },
   "devDependencies": {
     "lerna": "^6.4.1",
