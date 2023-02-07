@@ -8,8 +8,8 @@ import {
 } from "./fixtures";
 import {
   Geolocation,
-  ScaledGeolocation,
   GeolocationSiwe,
+  GeolocationVerifier,
 } from "../Geolocation";
 import axios from "axios";
 
@@ -20,7 +20,7 @@ describe("Geolocation", () => {
       expect(geolocation).toBeInstanceOf(Geolocation);
     });
     test("should init mainnet", () => {
-      new Geolocation({ isMainnet: true });
+      new Geolocation();
     });
   });
   describe("getters", () => {
@@ -96,24 +96,6 @@ describe("Geolocation", () => {
         geolocation.location = { ...unscaledLocation, from: 100, to: 1 };
       }).toThrow();
     });
-  });
-});
-
-describe("ScaledGeolocation", () => {
-  describe("constructor", () => {
-    test("should init without props", () => {
-      const geolocation = new ScaledGeolocation();
-      expect(geolocation).toBeInstanceOf(ScaledGeolocation);
-    });
-    test("should init mainnet", () => {
-      new Geolocation({ isMainnet: true });
-    });
-  });
-  describe("setters", () => {
-    let geolocation: ScaledGeolocation;
-    beforeEach(() => {
-      geolocation = new ScaledGeolocation();
-    });
     test("should set unscaled location and update scaled location", () => {
       geolocation.location = unscaledLocation;
       expect(geolocation.locationArea).toEqual({
@@ -121,47 +103,24 @@ describe("ScaledGeolocation", () => {
         longitude: unscaledLocation.longitude,
         distance: unscaledLocation.distance,
       });
-      expect(geolocation.scaledLocation).toEqual({
+      expect(geolocation.scaledLocationArea).toEqual({
         scaled_latitude: Math.round(unscaledLocation.latitude * 1000000),
         scaled_longitude: Math.round(unscaledLocation.longitude * 1000000),
         distance: unscaledLocation.distance,
       });
     });
     test("should set scaled location and update unscaled location", () => {
-      geolocation.scaledLocation = scaledLocation;
+      geolocation.scaledLocationArea = scaledLocation;
       expect(geolocation.locationArea).toEqual({
         latitude: scaledLocation.scaled_latitude / 1000000,
         longitude: scaledLocation.scaled_longitude / 1000000,
         distance: scaledLocation.distance,
       });
-      expect(geolocation.scaledLocation).toEqual({
+      expect(geolocation.scaledLocationArea).toEqual({
         scaled_latitude: scaledLocation.scaled_latitude,
         scaled_longitude: scaledLocation.scaled_longitude,
         distance: scaledLocation.distance,
       });
-    });
-  });
-  describe("proof generation", () => {
-    test.only("should verify mock location", async () => {
-      const geolocation = new ScaledGeolocation();
-      geolocation.location = unscaledLocation;
-      jest.spyOn(axios, "post").mockResolvedValue({
-        data: {
-          result: {
-            data: [
-              {
-                ...geolocation.scaledLocation,
-                from: Number(geolocation.location.from),
-                to: Number(geolocation.location.to),
-                devicehash: "devicehash",
-                signature: "signature",
-              },
-            ],
-          },
-        },
-      });
-
-      await geolocation.verifyLocation();
     });
   });
 });
@@ -186,5 +145,36 @@ describe("GeolocationSiwe", () => {
     geolocation.location = unscaledLocation;
     geolocation.signature = mockSignature;
     expect(geolocation.signature).toEqual(mockSignature);
+  });
+});
+
+describe("GeolocationVerifier", () => {
+  test("should verify location", async () => {
+    const geoVerifier = new GeolocationVerifier();
+    geoVerifier.location = unscaledLocation;
+
+    jest.spyOn(axios, "post").mockResolvedValue({
+      data: {
+        result: {
+          data: [
+            {
+              ...geoVerifier.scaledLocationArea,
+              from: Number(geoVerifier.location.from),
+              to: Number(geoVerifier.location.to),
+              devicehash: "devicehash",
+              signature: "signature",
+            },
+          ],
+        },
+      },
+    });
+
+    geoVerifier.generateSiweMessage({
+      domain: mockDomain,
+      uri: mockUri,
+      address: mockOwner,
+    });
+    geoVerifier.signature = mockSignature;
+    geoVerifier.verifyLocation();
   });
 });
