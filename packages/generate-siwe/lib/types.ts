@@ -1,18 +1,12 @@
-export type LocationSiweProps = {
-  domain: string;  // domain of the request, e.g. example.com
-  address: string;
-  uri: string;  // origin of the request, e.g. https://example.com
-  latitude: number;  // range [-90, 90]
-  longitude: number;  // range [-180, 180]
-  distance: number;  // range [0, infinity), meters
-  from: number;  // timestamp, unix milliseconds
-  to: number;  // timestamp, unix milliseconds
-};
+import {
+  LocationArea,
+  LocationISOTime,
+  LocationTimestamp,
+} from "./../../../types";
+import { SiweMessage } from "siwe";
 
-export type ParsedLocationSiweProps = {
-  latitude: number;
-  longitude: number;
-  distance: number;
-  from: string;
-  to: string;
-};
+export type RawLocation = LocationTimestamp & LocationArea;
+
+export type ParsedLocationSiweProps = LocationISOTime & LocationArea;
+
+export type LocationSiweProps = RawLocation & Partial<SiweMessage>;

@@ -4,6 +4,9 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "test": "npx lerna run test"
+  },
   "devDependencies": {
     "lerna": "^6.4.1",
     "@types/jest": "^29.4.0",

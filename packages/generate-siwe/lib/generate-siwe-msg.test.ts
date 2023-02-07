@@ -65,10 +65,10 @@ describe("Generate SIWE message", () => {
     describe("Latitude validation", () => {
       test("should fail if latitude is not in range", () => {
         expect(() =>
-          generateSiweMsg({ ...singleLocation, latitude: 90.00000001 })
+          generateSiweMsg({ ...singleLocation, latitude: 90.000001 })
         ).toThrow("Latitude is out of range");
         expect(() =>
-          generateSiweMsg({ ...singleLocation, latitude: -90.00000001 })
+          generateSiweMsg({ ...singleLocation, latitude: -90.000001 })
         ).toThrow("Latitude is out of range");
       });
       test("should not fail if latitude is in range", () => {
@@ -82,7 +82,7 @@ describe("Generate SIWE message", () => {
           generateSiweMsg({ ...singleLocation, latitude: -90.0 })
         ).not.toThrow();
         expect(() =>
-          generateSiweMsg({ ...singleLocation, latitude: 47.1231231 })
+          generateSiweMsg({ ...singleLocation, latitude: 47.123121 })
         ).not.toThrow();
         expect(() =>
           generateSiweMsg({ ...singleLocation, latitude: 0 })
@@ -92,10 +92,10 @@ describe("Generate SIWE message", () => {
     describe("Longitude validation", () => {
       test("should fail if longitude is not in range", () => {
         expect(() =>
-          generateSiweMsg({ ...singleLocation, longitude: 180.00000001 })
+          generateSiweMsg({ ...singleLocation, longitude: 180.000001 })
         ).toThrow("Longitude is out of range");
         expect(() =>
-          generateSiweMsg({ ...singleLocation, longitude: -180.00000001 })
+          generateSiweMsg({ ...singleLocation, longitude: -180.000001 })
         ).toThrow("Longitude is out of range");
       });
       test("should not fail if longitude is in range", () => {
@@ -109,7 +109,7 @@ describe("Generate SIWE message", () => {
           generateSiweMsg({ ...singleLocation, longitude: -180.0 })
         ).not.toThrow();
         expect(() =>
-          generateSiweMsg({ ...singleLocation, longitude: 47.1231231 })
+          generateSiweMsg({ ...singleLocation, longitude: 47.123121 })
         ).not.toThrow();
         expect(() =>
           generateSiweMsg({ ...singleLocation, longitude: 0 })
