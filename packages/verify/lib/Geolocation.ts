@@ -1,14 +1,12 @@
 import {
-  LocationArea,
-  LocationTimestamp,
-  ScaledLocationArea,
-} from "../../../types";
-import {
   validateLatitude,
   validateLongitude,
   validateDistance,
   validateTime,
   generateSiweMsg,
+  LocationArea,
+  LocationTimestamp,
+  ScaledLocationArea,
 } from "@geostream-react/generate-siwe";
 import axios from "axios";
 import { VerifiedLocation } from "./types";

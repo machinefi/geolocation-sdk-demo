@@ -2,7 +2,7 @@ import {
   LocationISOTime,
   LocationTimestamp,
   ScaledLocationArea,
-} from "./../../../types";
+} from "@geostream-react/generate-siwe";
 
 export type Location = ScaledLocationArea & LocationISOTime;
 
