@@ -6,5 +6,5 @@
       "outDir": "./dist",
       "esModuleInterop": true
     },
-    "include": ["lib/*"]
+    "include": ["lib/*", "lib/__test__/generate-siwe-msg.test.ts"]
   }
