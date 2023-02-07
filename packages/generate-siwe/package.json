@@ -15,5 +15,6 @@
   "license": "MIT",
   "peerDependencies": {
     "siwe": "^1.1.6"
-  }
+  },
+  "gitHead": "675c95409b24b0c71a902ec02fa9c305c8e96eb4"
 }

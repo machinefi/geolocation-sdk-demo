@@ -25,5 +25,8 @@
   "dependencies": {
     "generate-siwe": "file:packages/generate-siwe",
     "geolocation": "file:packages/geolocation"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
