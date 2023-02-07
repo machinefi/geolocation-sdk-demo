@@ -1,5 +1,5 @@
-import generateSiweMsg from "./generate-siwe-msg";
-import { LocationSiweProps } from "./types";
+import generateSiweMsg from "../generate-siwe-msg";
+import { LocationSiweProps } from "../types";
 
 const singleLocation: LocationSiweProps = {
   domain: "siwe.io",
