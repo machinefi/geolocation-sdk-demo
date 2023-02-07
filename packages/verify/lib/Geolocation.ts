@@ -31,7 +31,11 @@ import {
 // });
 
 // step4 - sign message
+// const signature = await window.ethereum.request({...});
+
 // step5 - add signature
+// geolocation.signature = signature;
+
 // step6 - verify location
 
 type RawLocation = LocationTimestamp & LocationArea;
@@ -135,6 +139,18 @@ class ScaledGeolocation extends Geolocation {
 }
 
 class GeolocationSiwe extends Geolocation {
+  private _signature: string | null = null;
+  private _message: string | null = null;
+  private _owner: string | null = null;
+
+  get signature(): string | null {
+    return this._signature;
+  }
+
+  set signature(signature: string | null) {
+    this._signature = signature;
+  }
+
   generateSiweMessage(props: {
     domain: string;
     uri: string;

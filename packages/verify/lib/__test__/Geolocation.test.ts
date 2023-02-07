@@ -182,4 +182,9 @@ describe("GeolocationSiwe", () => {
     expect(msg).toContain(mockUri);
     expect(msg).toContain(mockOwner);
   });
+  test("should set signature", () => {
+    geolocation.location = unscaledLocation;
+    geolocation.signature = mockSignature;
+    expect(geolocation.signature).toEqual(mockSignature);
+  });
 });
