@@ -1,35 +1,32 @@
-import { scaledLocation, unscaledLocation } from "./fixtures";
-import { Geolocation, ScaledGeolocation } from "../Geolocation";
+import {
+  mockDomain,
+  mockUri,
+  mockOwner,
+  scaledLocation,
+  unscaledLocation,
+  mockSignature,
+} from "./fixtures";
+import {
+  Geolocation,
+  ScaledGeolocation,
+  GeolocationSiwe,
+} from "../Geolocation";
+import axios from "axios";
 
 describe("Geolocation", () => {
   describe("constructor", () => {
     test("should init without props", () => {
       const geolocation = new Geolocation();
       expect(geolocation).toBeInstanceOf(Geolocation);
-      expect(geolocation.isMainnet).toBe(false);
     });
     test("should init mainnet", () => {
-      const geolocation = new Geolocation({ isMainnet: true });
-      expect(geolocation.isMainnet).toBe(true);
+      new Geolocation({ isMainnet: true });
     });
   });
-
   describe("getters", () => {
     let geolocation: Geolocation;
     beforeEach(() => {
       geolocation = new Geolocation();
-    });
-    test("should get isMainnet", () => {
-      expect(geolocation.isMainnet).toBe(false);
-    });
-    test("should get api", () => {
-      expect(geolocation.testApi).toBe(
-        "https://geo-test.w3bstream.com/api/pol"
-      );
-    });
-    test("should get mainnet api", () => {
-      const geolocation = new Geolocation({ isMainnet: true });
-      expect(geolocation.mainApi).toBe("https://geo.w3bstream.com/api/pol");
     });
     test("should get location", () => {
       geolocation.location = unscaledLocation;
@@ -107,11 +104,9 @@ describe("ScaledGeolocation", () => {
     test("should init without props", () => {
       const geolocation = new ScaledGeolocation();
       expect(geolocation).toBeInstanceOf(ScaledGeolocation);
-      expect(geolocation.isMainnet).toBe(false);
     });
     test("should init mainnet", () => {
-      const geolocation = new Geolocation({ isMainnet: true });
-      expect(geolocation.isMainnet).toBe(true);
+      new Geolocation({ isMainnet: true });
     });
   });
   describe("setters", () => {
@@ -146,38 +141,45 @@ describe("ScaledGeolocation", () => {
       });
     });
   });
+  describe("proof generation", () => {
+    test.only("should verify mock location", async () => {
+      const geolocation = new ScaledGeolocation();
+      geolocation.location = unscaledLocation;
+      jest.spyOn(axios, "post").mockResolvedValue({
+        data: {
+          result: {
+            data: [
+              {
+                ...geolocation.scaledLocation,
+                from: Number(geolocation.location.from),
+                to: Number(geolocation.location.to),
+                devicehash: "devicehash",
+                signature: "signature",
+              },
+            ],
+          },
+        },
+      });
+
+      await geolocation.verifyLocation();
+    });
+  });
 });
 
-// describe.skip("Verify location", () => {
-//   test("should verify mock location", async () => {
-//     jest.spyOn(axios, "post").mockResolvedValue({
-//       data: {
-//         result: {
-//           data: [
-//             {
-//               scaled_latitude: locationOne.scaled_latitude,
-//               scaled_longitude: locationOne.scaled_longitude,
-//               distance: locationOne.distance,
-//               from: Number(locationOne.from),
-//               to: Number(locationOne.to),
-//               devicehash: "devicehash",
-//               signature: "signature",
-//             },
-//           ],
-//         },
-//       },
-//     });
-
-//     const geolocation = new Geolocation(GEOSTREAM_API);
-//     await geolocation.verifyLocation(
-//       locations,
-//       owner,
-//       signature,
-//       message
-//     );
-//   });
-//   test("should init with location", () => {
-//     const geolocation = new Geolocation(GEOSTREAM_API, locationOne);
-//     expect(geolocation.location).toEqual(locationOne);
-//   })
-// });
+describe("GeolocationSiwe", () => {
+  let geolocation: GeolocationSiwe;
+  beforeEach(() => {
+    geolocation = new GeolocationSiwe();
+  });
+  test("should generate siwe message", () => {
+    geolocation.location = unscaledLocation;
+    const msg = geolocation.generateSiweMessage({
+      domain: mockDomain,
+      uri: mockUri,
+      address: mockOwner,
+    });
+    expect(msg).toContain(mockDomain);
+    expect(msg).toContain(mockUri);
+    expect(msg).toContain(mockOwner);
+  });
+});

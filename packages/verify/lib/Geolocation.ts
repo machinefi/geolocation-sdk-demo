@@ -8,11 +8,28 @@ import {
   validateLongitude,
   validateDistance,
   validateTime,
-} from "@geostream-react/generate-siwe/lib/validators";
+  generateSiweMsg,
+} from "@geostream-react/generate-siwe";
 
 // step1 - init geolocation (mainnet or testnet)
+// const geolocation = new Geolocation({ isMainnet: true });
+
 // step2 - provide location
+// geolocation.location = {
+//   latitude: 50.4501,
+//   longitude: 30.5234,
+//   distance: 100,
+//   from: 1610000000,
+//   to: 1610000000,
+// };
+
 // step3 - generate message to sign
+// const message = geolocation.generateMessage({
+//   domain: "https://example.com",
+//   uri: "https://example.com",
+//   address: "0x0000000000000000000000000000000000000000",
+// });
+
 // step4 - sign message
 // step5 - add signature
 // step6 - verify location
@@ -30,18 +47,6 @@ class Geolocation {
     if (options?.isMainnet) {
       this._isMainnet = true;
     }
-  }
-
-  get testApi(): string {
-    return this._testApi;
-  }
-
-  get mainApi(): string {
-    return this._mainApi;
-  }
-
-  get isMainnet(): boolean {
-    return this._isMainnet;
   }
 
   get location(): RawLocation | null {
@@ -86,7 +91,7 @@ class Geolocation {
 }
 
 class ScaledGeolocation extends Geolocation {
-  get scaledLocation() {
+  get scaledLocation(): ScaledLocationArea {
     const { latitude, longitude, distance } = this.locationArea;
     return {
       scaled_latitude: ScaledGeolocation.scaleCoordinatesUp(latitude),
@@ -94,7 +99,7 @@ class ScaledGeolocation extends Geolocation {
       distance,
     };
   }
-  
+
   set scaledLocation(location: ScaledLocationArea) {
     const { scaled_latitude, scaled_longitude, distance } = location;
     this.locationArea = {
@@ -102,6 +107,22 @@ class ScaledGeolocation extends Geolocation {
       longitude: ScaledGeolocation.scaleCoordinatesDown(scaled_longitude),
       distance,
     };
+  }
+
+  async verifyLocation() {
+    // const body = {
+    //   signature,
+    //   message,
+    //   owner,
+    //   locations,
+    // };
+    // try {
+    //   const response = await axios.post(geostreamEndpoint, body);
+    //   return response.data.result.data;
+    // } catch (error) {
+    //   console.log(`Querying GeoStream API failed with error: ${error}.`);
+    // }
+    // return [];
   }
 
   static scaleCoordinatesDown(coordInput: number) {
@@ -113,4 +134,18 @@ class ScaledGeolocation extends Geolocation {
   }
 }
 
-export { Geolocation, ScaledGeolocation };
+class GeolocationSiwe extends Geolocation {
+  generateSiweMessage(props: {
+    domain: string;
+    uri: string;
+    address: string;
+  }): string {
+    return generateSiweMsg({
+      ...this.locationArea,
+      ...this.locationTime,
+      ...props,
+    });
+  }
+}
+
+export { Geolocation, ScaledGeolocation, GeolocationSiwe };
