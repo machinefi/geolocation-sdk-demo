@@ -1,5 +1,5 @@
 {
-  "name": "@geostream-react/generate-siwe",
+  "name": "@g3o/generate-siwe",
   "version": "0.0.0",
   "description": "generate siwe message from location data",
   "main": "index.js",

@@ -1,7 +1,7 @@
 import {
   LocationArea,
   LocationTimestamp,
-} from "@geostream-react/generate-siwe";
+} from "@g3o/generate-siwe";
 import { Location } from "../types";
 
 export const scaledLocation: Location = {

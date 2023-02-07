@@ -1,5 +1,5 @@
 {
-  "name": "@geostream-react/verify",
+  "name": "@g3o/geolocation",
   "version": "0.0.0",
   "description": "verify siwe msg and generate proof of location",
   "main": "index.js",
@@ -9,7 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@geostream-react/generate-siwe": "^0.0.0"
+    "@g3o/generate-siwe": "^0.0.0"
   },
   "peerDependencies": {
     "axios": "^1.3.2"

@@ -7,7 +7,7 @@ import {
   LocationArea,
   LocationTimestamp,
   ScaledLocationArea,
-} from "@geostream-react/generate-siwe";
+} from "@g3o/generate-siwe";
 import axios from "axios";
 import { VerifiedLocation } from "./types";
 

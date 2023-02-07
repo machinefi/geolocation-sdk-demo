@@ -1,5 +1,5 @@
 {
-  "name": "geolocation",
+  "name": "g3o",
   "description": "Tool for geolocation verification and parsing",
   "workspaces": [
     "packages/*"
