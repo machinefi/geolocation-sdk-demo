@@ -1,38 +1,34 @@
+import axios from "axios";
 import { Location, VerifiedLocation } from "./types";
 
-const GEOSTREAM_API = "https://geo-test.w3bstream.com/api/pol";
+class Geolocation {
+  private geostreamEndpoint: string;
 
-const getLocationProof = async (
-  locations: Location[],
-  owner: string,
-  signature: string,
-  message: string | Uint8Array
-): Promise<VerifiedLocation[] | undefined> => {
-  const body = {
-    signature,
-    message,
-    owner,
-    locations,
-  };
-
-  try {
-    const response = await fetch(GEOSTREAM_API, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      console.log("Error getting location proof");
-      return;
-    }
-    const data = await response.json();
-    return data.result.data;
-  } catch (error) {
-    console.log(error);
+  constructor(geostreamEndpoint: string) {
+    this.geostreamEndpoint = geostreamEndpoint;
   }
-};
 
-export default getLocationProof;
+  async verifyLocation(
+    locations: Location[],
+    owner: string,
+    signature: string,
+    message: string | Uint8Array
+  ): Promise<VerifiedLocation[]> {
+    const body = {
+      signature,
+      message,
+      owner,
+      locations,
+    };
+
+    try {
+      const response = await axios.post(this.geostreamEndpoint, body);
+      return response.data.result.data;
+    } catch (error) {
+      console.log(`Querying GeoStream API failed with error: ${error}.`);
+    }
+    return [];
+  }
+}
+
+export default Geolocation;
