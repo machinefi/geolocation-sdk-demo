@@ -2,9 +2,14 @@
   "name": "@g3o/generate-siwe",
   "version": "0.0.0",
   "description": "generate siwe message from location data",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest",
+    "build": "tsc"
   },
   "author": "",
   "license": "MIT",
