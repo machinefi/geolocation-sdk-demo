@@ -1,6 +1,6 @@
 {
   "name": "@g3o/generate-siwe",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "generate siwe message from location data",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
