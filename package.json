@@ -1,11 +1,13 @@
 {
-  "name": "root",
-  "private": true,
+  "name": "geolocation",
+  "description": "Tool for geolocation verification and parsing",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "test": "npx lerna run test"
+    "bootstrap": "lerna bootstrap && lerna exec npm install",
+    "test": "npx lerna run test",
+    "build": "lerna run build"
   },
   "devDependencies": {
     "lerna": "^6.4.1",
@@ -19,6 +21,6 @@
   },
   "dependencies": {
     "generate-siwe": "file:packages/generate-siwe",
-    "verify": "file:packages/verify"
+    "geolocation": "file:packages/geolocation"
   }
 }
