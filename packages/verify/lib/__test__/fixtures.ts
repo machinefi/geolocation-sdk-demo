@@ -10,10 +10,12 @@ export const scaledLocation: Location = {
 };
 
 export const locations: Location[] = [scaledLocation];
-export const owner = "0x999999cf1046e68e36E1aA2E0E07105eDDD1f08E";
-export const signature =
+export const mockDomain = "siwe.io";
+export const mockUri = `https://${mockDomain}`;
+export const mockOwner = "0x999999cf1046e68e36E1aA2E0E07105eDDD1f08E";
+export const mockSignature =
   "0x7337bc2826c7678cd6bc84f5b3b236efc969b0451f9feca2328b1d3401b030c113f19bdba359ba3f52762c66e9147311fa95fe598a1a4ec9bb383a7b4e3874241b";
-export const message = `siwe.io wants you to sign in with your Ethereum account:
+export const mockMessage = `siwe.io wants you to sign in with your Ethereum account:
 0x999999cf1046e68e36E1aA2E0E07105eDDD1f08E
 
 The application will know if you were located in the following region with latitude: -45.5, longitude: 123, and within a maximum distance of 123 meters, between 2/6/2023, and 2/13/2023

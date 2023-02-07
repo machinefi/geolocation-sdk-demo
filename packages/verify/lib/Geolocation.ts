@@ -11,6 +11,7 @@ import {
   generateSiweMsg,
 } from "@geostream-react/generate-siwe";
 import axios from "axios";
+import { VerifiedLocation } from "./types";
 
 type RawLocation = LocationTimestamp & LocationArea;
 
@@ -139,7 +140,7 @@ class GeolocationVerifier extends GeolocationSiwe {
     }
   }
 
-  async verifyLocation() {
+  async verifyLocation(): Promise<VerifiedLocation[]> {
     if (!this.locationArea || !this.locationTime) {
       throw new Error("Missing location area or time");
     }

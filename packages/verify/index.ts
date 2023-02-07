@@ -1,1 +1,1 @@
-export * from "./lib/verify-location";
+export * from "./lib/Geolocation";
