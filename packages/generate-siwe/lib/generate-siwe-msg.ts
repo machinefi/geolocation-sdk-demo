@@ -10,7 +10,7 @@ import {
 
 const TESTNET_CHAIN_ID = 4690;
 
-const generateSiweMsg = (props: LocationSiweProps): string => {
+export const generateSiweMsg = (props: LocationSiweProps): string => {
   validateProps(props);
 
   const parsedProps = parseProps(props);
