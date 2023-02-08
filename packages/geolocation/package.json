@@ -1,6 +1,6 @@
 {
   "name": "@nicky-ru/g3o",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "verify siwe msg and generate proof of location",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@nicky-ru/generate-siwe": "^0.0.5"
+    "@nicky-ru/generate-siwe": "^1.0.0"
   },
   "peerDependencies": {
     "axios": "^1.3.2"
