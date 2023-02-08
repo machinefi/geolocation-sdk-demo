@@ -1,5 +1,5 @@
 {
-  "name": "@g3o/geolocation",
+  "name": "@nicky-ru/g3o",
   "version": "0.0.5",
   "description": "verify siwe msg and generate proof of location",
   "main": "dist/index.js",
@@ -14,10 +14,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@g3o/generate-siwe": "^0.0.5"
+    "@nicky-ru/generate-siwe": "^0.0.5"
   },
   "peerDependencies": {
     "axios": "^1.3.2"
   },
-  "gitHead": "0393f6e6da52c94f3fa2c8635916e23d910dfa19"
+  "gitHead": "98963fa016eb7813ae8e0e21ee73e650bb76a1ba"
 }

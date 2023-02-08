@@ -2,7 +2,7 @@ import {
   LocationISOTime,
   LocationTimestamp,
   ScaledLocationArea,
-} from "@g3o/generate-siwe";
+} from "@nicky-ru/generate-siwe";
 
 export type Location = ScaledLocationArea & LocationISOTime;
 

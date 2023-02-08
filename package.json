@@ -1,5 +1,5 @@
 {
-  "name": "g3o",
+  "name": "@nicky-ru/g3o",
   "description": "Tool for geolocation verification and parsing",
   "workspaces": [
     "packages/*"
@@ -25,8 +25,5 @@
   "dependencies": {
     "generate-siwe": "file:packages/generate-siwe",
     "geolocation": "file:packages/geolocation"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
   }
 }

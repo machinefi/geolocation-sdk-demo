@@ -1,5 +1,5 @@
 {
-  "name": "@g3o/generate-siwe",
+  "name": "@nicky-ru/generate-siwe",
   "version": "0.0.5",
   "description": "generate siwe message from location data",
   "main": "dist/index.js",
@@ -16,5 +16,5 @@
   "peerDependencies": {
     "siwe": "^1.1.6"
   },
-  "gitHead": "0393f6e6da52c94f3fa2c8635916e23d910dfa19"
+  "gitHead": "98963fa016eb7813ae8e0e21ee73e650bb76a1ba"
 }
