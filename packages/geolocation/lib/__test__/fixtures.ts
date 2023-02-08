@@ -1,7 +1,7 @@
 import {
   LocationArea,
   LocationTimestamp,
-} from "@nicky-ru/generate-siwe";
+} from "@nick-iotex/generate-siwe";
 import { Location } from "../types";
 
 export const scaledLocation: Location = {

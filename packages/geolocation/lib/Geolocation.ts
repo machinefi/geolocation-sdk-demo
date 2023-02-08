@@ -7,7 +7,7 @@ import {
   LocationArea,
   LocationTimestamp,
   ScaledLocationArea,
-} from "@nicky-ru/generate-siwe";
+} from "@nick-iotex/generate-siwe";
 import axios from "axios";
 import { VerifiedLocation } from "./types";
 

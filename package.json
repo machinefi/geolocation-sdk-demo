@@ -1,6 +1,5 @@
 {
-  "name": "@nicky-ru/g3o",
-  "version": "1.0.0",
+  "name": "root",
   "description": "Tool for geolocation verification and parsing",
   "workspaces": [
     "packages/*"

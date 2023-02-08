@@ -1,0 +1,15 @@
+39 error Error: Command failed with exit code 1: npm install --package-lock-only --ignore-scripts
+39 error npm ERR! code E404
+39 error npm ERR! 404 Not Found - GET https://registry.npmjs.org/@nicky-ru%2fgenerate-siwe - Not found
+39 error npm ERR! 404
+39 error npm ERR! 404  '@nicky-ru/generate-siwe@^0.0.5' is not in this registry.
+39 error npm ERR! 404
+39 error npm ERR! 404 Note that you can also install from a
+39 error npm ERR! 404 tarball, folder, http url, or git url.
+39 error
+39 error npm ERR! A complete log of this run can be found in:
+39 error npm ERR!     /Users/zhoudev/.npm/_logs/2023-02-08T15_25_14_269Z-debug-0.log
+39 error     at makeError (/Users/zhoudev/Documents/iotex/g3o/node_modules/execa/lib/error.js:60:11)
+39 error     at handlePromise (/Users/zhoudev/Documents/iotex/g3o/node_modules/execa/index.js:118:26)
+39 error     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+39 error     at async Promise.all (index 0)

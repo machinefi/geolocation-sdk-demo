@@ -1,6 +1,6 @@
 {
-  "name": "@nicky-ru/generate-siwe",
-  "version": "1.0.0",
+  "name": "@nick-iotex/generate-siwe",
+  "version": "1.0.1",
   "description": "generate siwe message from location data",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
