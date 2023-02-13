@@ -225,6 +225,28 @@ describe("Geolocation", () => {
           };
         }).toThrow();
       });
+      test("should throw if scaled From is greater then scaled To", () => {
+        expect(() => {
+          geolocation.scaledLocationTime = {
+            ...scaledLocation,
+            from: 100,
+            to: 1,
+          };
+        }).toThrow();
+      });
+      test("should set scaled location", () => {
+        geolocation.scaledLocation = scaledLocation;
+        expect(geolocation.locationArea).toEqual({
+          latitude: scaledLocation.scaled_latitude / 1000_000,
+          longitude: scaledLocation.scaled_longitude / 1000_000,
+          distance: scaledLocation.distance,
+        });
+        expect(geolocation.locationTime).toEqual({
+          from: scaledLocation.from * 1000,
+          to: scaledLocation.to * 1000,
+        });
+        expect(geolocation.scaledLocation).toEqual(scaledLocation);
+      });
     });
   });
 });

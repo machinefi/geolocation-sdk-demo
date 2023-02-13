@@ -102,15 +102,24 @@ class Geolocation {
     const from = Geolocation.secondsToMilliseconds(time.from);
     const to = Geolocation.secondsToMilliseconds(time.to);
 
-    Geolocation.validateLocationTime({ from, to });
-
     this.locationTime = {
       from,
       to,
     };
   }
 
-  set scaledLocation(location: ScaledLocation) {}
+  set scaledLocation(location: ScaledLocation) {
+    const { scaled_latitude, scaled_longitude, distance, from, to } = location;
+    this.scaledLocationArea = {
+      scaled_latitude,
+      scaled_longitude,
+      distance,
+    };
+    this.scaledLocationTime = {
+      from,
+      to,
+    };
+  }
 
   //////////////////////////
   //// STATIC FUNCTIONS ////
