@@ -5,9 +5,14 @@ export type LocationISOTime = {
   to: string; // ISO time
 };
 
-export type LocationTimestamp = {
+export type LocationTimestampMs = {
   from: number; // timestamp, unix milliseconds
   to: number; // timestamp, unix milliseconds
+};
+
+export type LocationTimestampSeconds = {
+  from: number; // timestamp, unix seconds
+  to: number; // timestamp, unix seconds
 };
 
 type Distance = {
@@ -23,8 +28,8 @@ export type ScaledLocationArea = Distance & {
   scaled_latitude: number; // range [-9000000000, 9000000000]
   scaled_longitude: number; // range [-18000000000, 18000000000]
 };
-export type RawLocation = LocationTimestamp & LocationArea;
+export type Location = LocationTimestampMs & LocationArea;
 
 export type ParsedLocationSiweProps = LocationISOTime & LocationArea;
 
-export type LocationSiweProps = RawLocation & Partial<SiweMessage>;
+export type LocationSiweProps = Location & Partial<SiweMessage>;

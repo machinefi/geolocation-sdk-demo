@@ -1,13 +1,15 @@
 import {
   LocationISOTime,
-  LocationTimestamp,
+  LocationTimestampMs,
   ScaledLocationArea,
+  LocationTimestampSeconds,
 } from "@nick-iotex/generate-siwe";
 
-export type Location = ScaledLocationArea & LocationISOTime;
+export type ScaledLocation = ScaledLocationArea & LocationTimestampSeconds;
+export type LocationToSign = ScaledLocationArea & LocationISOTime;
 
 export type VerifiedLocation = ScaledLocationArea &
-  LocationTimestamp & {
+  LocationTimestampMs & {
     devicehash: string;
     signature: string;
   };
