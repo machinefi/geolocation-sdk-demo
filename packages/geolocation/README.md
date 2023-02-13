@@ -11,49 +11,38 @@ In order to call the mainnet API you'll need to specify it like this: `new Geolo
 In order to generate a Siwe message, you'll have to first create a location, like this: 
 
 ```typescript
- geolocation.location = ({latitude: 47.658872, longitude: -27.4444, distance:1000, from: timestampMs, to: timestampMs})
+geolocation.location = { 
+    latitude: 47.658872,    // range [-90, 90]
+    longitude: -27.4444,    // range [-180, 180]
+    distance: 1000,         // range [0, infinity), meters
+    from: 1676305034021,    // timestamp, unix milliseconds
+    to: 1676305034488       // timestamp, unix milliseconds
+    }
  ```
  
 Or for scaled coordinates (e.g. latitude: 47658872, etc...) you can set a `scaledLocationArea` like this: 
 
 ```typescript
-
 // sets location area
-
-geolocation.scaledLocationArea = {
-    scaled_latitude: number,
-    scaled_longitude: number,
-    distance: number
+geolocation.scaledLocation = {
+    scaled_latitude: -45500000,
+    scaled_longitude: 123000000,
+    distance: 100,
+    from: 1676305034,   // timestamp, unix seconds
+    to: 1676305035      // timestamp, unix seconds
     }
-
-```
-
-And set the location time in milliseconds like this: 
-
-```typescript
-
-// sets location time
-
-geolocation.locationTime = {
-    from: number,
-    to: number
-    }
-
 ```
 
 These values will be validated under the hood, and will be used in the `generateSiweMessage()` method: 
 
 
 ```typescript
-
 // generates Siwe message and returns it as a string
-
-geolocation.generateSiweMessage({
+const msg = geolocation.generateSiweMessage({
     domain: string,
     uri: string,
     address: string,
     })
-
 ```
 
 You can now use any library of choice to sign this message and retrieve its signature. 
@@ -61,14 +50,15 @@ You can now use any library of choice to sign this message and retrieve its sign
 You can now set the signature you just retrieved like this: 
 
 ```typescript
-
 // sets the signature
-
-geolocation.signature = { signature: string } 
-
+geolocation.signature = signature
 ```
 
 You're now ready to call the `verifyLocation()` method which will not need any params. 
+
+```typescript
+const verifiedLocation = await geolocation.verifyLocation();
+```
 
 ## Get Started
 
