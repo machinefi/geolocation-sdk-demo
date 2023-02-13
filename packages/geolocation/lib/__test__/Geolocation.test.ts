@@ -256,21 +256,55 @@ describe("GeolocationSiwe", () => {
   beforeEach(() => {
     geolocation = new GeolocationSiwe();
   });
-  test("should generate siwe message", () => {
-    geolocation.location = unscaledLocation;
-    const msg = geolocation.generateSiweMessage({
-      domain: mockDomain,
-      uri: mockUri,
-      address: mockOwner,
+  describe("getters and setters", () => {
+    test("should get signature", () => {
+      geolocation.signature = mockSignature;
+      expect(geolocation.signature).toEqual(mockSignature);
     });
-    expect(msg).toContain(mockDomain);
-    expect(msg).toContain(mockUri);
-    expect(msg).toContain(mockOwner);
+    test("should get unset signature", () => {
+      expect(geolocation.signature).toBeNull();
+    });
+    test("should get unset message", () => {
+      expect(geolocation.message).toBeNull();
+    });
+    test("should get unset owner", () => {
+      expect(geolocation.owner).toBeNull();
+    });
   });
-  test("should set signature", () => {
-    geolocation.location = unscaledLocation;
-    geolocation.signature = mockSignature;
-    expect(geolocation.signature).toEqual(mockSignature);
+  describe("siwe message", () => {
+    test("should generate siwe message with location", () => {
+      geolocation.location = unscaledLocation;
+      const msg = geolocation.generateSiweMessage({
+        domain: mockDomain,
+        uri: mockUri,
+        address: mockOwner,
+      });
+      expect(msg).toContain(mockDomain);
+      expect(msg).toContain(mockUri);
+      expect(msg).toContain(mockOwner);
+    });
+    test("should generate siwe message with scaled location", () => {
+      geolocation.scaledLocation = scaledLocation;
+      const msg = geolocation.generateSiweMessage({
+        domain: mockDomain,
+        uri: mockUri,
+        address: mockOwner,
+      });
+      console.log(msg)
+      expect(msg).toContain(mockDomain);
+      expect(msg).toContain(mockUri);
+      expect(msg).toContain(mockOwner);
+    })
+    test("should throw if location is not set", () => {
+      expect(() => {
+        geolocation.generateSiweMessage({
+          domain: mockDomain,
+          uri: mockUri,
+          address: mockOwner,
+        });
+      }).toThrow("Missing location area or time");
+    });
+    
   });
 });
 
