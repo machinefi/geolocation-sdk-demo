@@ -1,18 +1,15 @@
-import {
-  LocationArea,
-  LocationTimestamp,
-} from "@nick-iotex/generate-siwe";
-import { Location } from "../types";
+import { ScaledLocation } from "./../types";
+import { LocationArea, LocationTimestampMs } from "@nick-iotex/generate-siwe";
 
-export const scaledLocation: Location = {
+export const scaledLocation: ScaledLocation = {
   scaled_latitude: -45500000,
   scaled_longitude: 123000000,
   distance: 123,
-  from: "1",
-  to: "10",
+  from: 1676305034,
+  to: 1676305035,
 };
 
-export const locations: Location[] = [scaledLocation];
+export const locations: ScaledLocation[] = [scaledLocation];
 export const mockDomain = "siwe.io";
 export const mockUri = `https://${mockDomain}`;
 export const mockOwner = "0x999999cf1046e68e36E1aA2E0E07105eDDD1f08E";
@@ -30,7 +27,7 @@ Nonce: XRgMAiShdzGZYfwTK
 Issued At: 2023-02-06T21:56:13.210Z
 Expiration Time: 2023-02-06T22:01:13.209Z`;
 
-export const unscaledLocation: LocationTimestamp & LocationArea = {
+export const unscaledLocation: LocationTimestampMs & LocationArea = {
   latitude: -45.5,
   longitude: 123,
   distance: 123,
