@@ -290,11 +290,11 @@ describe("GeolocationSiwe", () => {
         uri: mockUri,
         address: mockOwner,
       });
-      console.log(msg)
+      console.log(msg);
       expect(msg).toContain(mockDomain);
       expect(msg).toContain(mockUri);
       expect(msg).toContain(mockOwner);
-    })
+    });
     test("should throw if location is not set", () => {
       expect(() => {
         geolocation.generateSiweMessage({
@@ -304,16 +304,91 @@ describe("GeolocationSiwe", () => {
         });
       }).toThrow("Missing location area or time");
     });
-    
   });
 });
 
 describe("GeolocationVerifier", () => {
+  let geoVerifier: GeolocationVerifier;
+  beforeEach(() => {
+    geoVerifier = new GeolocationVerifier();
+  });
   test("should verify location", async () => {
-    const geoVerifier = new GeolocationVerifier();
     geoVerifier.location = unscaledLocation;
 
+    const returnDataOne = {
+      ...geoVerifier.scaledLocationArea,
+      from: Number(geoVerifier.location.from),
+      to: Number(geoVerifier.location.to),
+      devicehash: "devicehash",
+      signature: "signature",
+    };
+
     jest.spyOn(axios, "post").mockResolvedValue({
+      status: 200,
+      data: {
+        result: {
+          data: [returnDataOne],
+        },
+      },
+    });
+
+    geoVerifier.generateSiweMessage({
+      domain: mockDomain,
+      uri: mockUri,
+      address: mockOwner,
+    });
+    geoVerifier.signature = mockSignature;
+    await expect(geoVerifier.verifyLocation()).resolves.toEqual([
+      returnDataOne,
+    ]);
+  });
+  test("should verify location with scaled location", async () => {
+    geoVerifier.scaledLocation = scaledLocation;
+
+    const returnDataOne = {
+      ...geoVerifier.scaledLocationArea,
+      from: Number(geoVerifier.location.from),
+      to: Number(geoVerifier.location.to),
+      devicehash: "devicehash",
+      signature: "signature",
+    };
+
+    jest.spyOn(axios, "post").mockResolvedValue({
+      status: 200,
+      data: {
+        result: {
+          data: [returnDataOne],
+        },
+      },
+    });
+
+    geoVerifier.generateSiweMessage({
+      domain: mockDomain,
+      uri: mockUri,
+      address: mockOwner,
+    });
+    geoVerifier.signature = mockSignature;
+    await expect(geoVerifier.verifyLocation()).resolves.toEqual([
+      returnDataOne,
+    ]);
+  });
+  test("should throw if signature is not set", async () => {
+    geoVerifier.location = unscaledLocation;
+
+    geoVerifier.generateSiweMessage({
+      domain: mockDomain,
+      uri: mockUri,
+      address: mockOwner,
+    });
+    await expect(geoVerifier.verifyLocation()).rejects.toThrow(
+      "Missing location signature, message or owner"
+    );
+  });
+  test("should throw if response is not 200", async () => {
+    geoVerifier.scaledLocation = scaledLocation;
+
+    jest.spyOn(axios, "post").mockResolvedValue({
+      status: 400,
       data: {
         result: {
           data: [
@@ -335,6 +410,46 @@ describe("GeolocationVerifier", () => {
       address: mockOwner,
     });
     geoVerifier.signature = mockSignature;
-    geoVerifier.verifyLocation();
+    await expect(geoVerifier.verifyLocation()).rejects.toThrow(
+      "Querying GeoStream API failed, see console for details"
+    );
+  });
+  test("should return empty array if no data is returned", async () => {
+    geoVerifier.scaledLocation = scaledLocation;
+
+    jest.spyOn(axios, "post").mockResolvedValue({
+      status: 200,
+      data: {
+        result: {},
+      },
+    });
+
+    geoVerifier.generateSiweMessage({
+      domain: mockDomain,
+      uri: mockUri,
+      address: mockOwner,
+    });
+    geoVerifier.signature = mockSignature;
+    await expect(geoVerifier.verifyLocation()).resolves.toEqual([]);
+  });
+  test("should return empty array if no verified locations are returned", async () => {
+    geoVerifier.scaledLocation = scaledLocation;
+
+    jest.spyOn(axios, "post").mockResolvedValue({
+      status: 200,
+      data: {
+        result: {
+          data: [],
+        },
+      },
+    });
+
+    geoVerifier.generateSiweMessage({
+      domain: mockDomain,
+      uri: mockUri,
+      address: mockOwner,
+    });
+    geoVerifier.signature = mockSignature;
+    await expect(geoVerifier.verifyLocation()).resolves.toEqual([]);
   });
 });

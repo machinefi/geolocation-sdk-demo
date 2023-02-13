@@ -216,7 +216,7 @@ class GeolocationVerifier extends GeolocationSiwe {
       signature: this.signature,
       message: this.message,
       owner: this.owner,
-      locations: [{ ...this.scaledLocationArea, ...this.locationTime }],
+      locations: [{ ...this.scaledLocationArea, ...this.scaledLocationTime }],
     };
 
     try {
@@ -226,14 +226,18 @@ class GeolocationVerifier extends GeolocationSiwe {
       );
 
       if (response.status !== 200) {
-        throw new Error("Querying GeoStream API failed");
+        throw new Error(
+          "Response status is not 200, check the console for details"
+        );
       }
 
-      return response.data.result.data;
+      return response.data?.result?.data?.length
+        ? response.data.result.data
+        : [];
     } catch (error) {
       console.log(`Querying GeoStream API failed with error: ${error}.`);
+      throw new Error("Querying GeoStream API failed, see console for details");
     }
-    return [];
   }
 }
 
