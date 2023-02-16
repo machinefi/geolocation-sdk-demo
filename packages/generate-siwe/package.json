@@ -1,6 +1,6 @@
 {
   "name": "@w3bstream/generate-siwe",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "generate siwe message from location data",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
