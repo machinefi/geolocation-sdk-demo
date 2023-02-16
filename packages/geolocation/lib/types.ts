@@ -3,7 +3,7 @@ import {
   LocationTimestampMs,
   ScaledLocationArea,
   LocationTimestampSeconds,
-} from "@nick-iotex/generate-siwe";
+} from "@w3bstream/generate-siwe";
 
 export type ScaledLocation = ScaledLocationArea & LocationTimestampSeconds;
 export type LocationToSign = ScaledLocationArea & LocationISOTime;

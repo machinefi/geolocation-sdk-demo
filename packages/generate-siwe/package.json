@@ -1,6 +1,6 @@
 {
-  "name": "@nick-iotex/generate-siwe",
-  "version": "2.0.1",
+  "name": "@w3bstream/generate-siwe",
+  "version": "0.0.0",
   "description": "generate siwe message from location data",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

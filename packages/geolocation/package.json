@@ -1,6 +1,6 @@
 {
-  "name": "@nick-iotex/g3o",
-  "version": "2.0.1",
+  "name": "@w3bstream/geolocation-light",
+  "version": "0.0.0",
   "description": "verify siwe msg and generate proof of location",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@nick-iotex/generate-siwe": "^2.0.1"
+    "@w3bstream/generate-siwe": "^0.0.0"
   },
   "peerDependencies": {
     "axios": "^1.3.2"

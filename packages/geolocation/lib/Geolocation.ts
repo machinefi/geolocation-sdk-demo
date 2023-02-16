@@ -9,7 +9,7 @@ import {
   ScaledLocationArea,
   Location,
   LocationTimestampSeconds,
-} from "@nick-iotex/generate-siwe";
+} from "@w3bstream/generate-siwe";
 import axios from "axios";
 import { ScaledLocation, VerifiedLocation } from "./types";
 

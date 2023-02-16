@@ -1,5 +1,5 @@
 import { ScaledLocation } from "./../types";
-import { LocationArea, LocationTimestampMs } from "@nick-iotex/generate-siwe";
+import { LocationArea, LocationTimestampMs } from "@w3bstream/generate-siwe";
 
 export const scaledLocation: ScaledLocation = {
   scaled_latitude: -45500000,

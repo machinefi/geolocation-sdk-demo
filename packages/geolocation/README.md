@@ -1,6 +1,6 @@
 ## Install
 
-Run `npm i @nick-iotex/g3o`
+Run `npm i @w3bstream/geolocation-light`
 
 ## HIW
 
